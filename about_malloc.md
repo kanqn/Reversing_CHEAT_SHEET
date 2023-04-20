@@ -34,6 +34,15 @@
 この時のmain_arena以外のarenaはmmap()によって確保される  
 
 
+#### max fast
+fastbinsに登録するchunkの最大サイズで72byteになる  
+0ビット目はfastbinsにchunkが存在するかどうかのフラグになっている  
+マスクとしてFASTCHUNKS_BITを使用します  
+  
+#### fastbins
+fastbinsは要求メモリを迅速に確保する為に用意されたchunkのリストヘッダで、  
+free()で解放されるchunkの内、サイズがmax_fast以下のものはこのリストに登録される。
+
 
 
 ### mallocが一定サイズの場合
