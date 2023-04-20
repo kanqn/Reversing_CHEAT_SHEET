@@ -34,14 +34,24 @@
 この時のmain_arena以外のarenaはmmap()によって確保される  
 
 
-#### max fast
-fastbinsに登録するchunkの最大サイズで72byteになる  
-0ビット目はfastbinsにchunkが存在するかどうかのフラグになっている  
-マスクとしてFASTCHUNKS_BITを使用します  
+### max fast
+・fastbinsに登録するchunkの最大サイズで72byteになる  
+・0ビット目はfastbinsにchunkが存在するかどうかのフラグになっている  
+・マスクとしてFASTCHUNKS_BITを使用する  
   
-#### fastbins
-fastbinsは要求メモリを迅速に確保する為に用意されたchunkのリストヘッダで、  
-free()で解放されるchunkの内、サイズがmax_fast以下のものはこのリストに登録される。
+### fastbins  
+・単方向線形リスト  
+・fastbinsは要求メモリを迅速に確保する為に用意されたchunkのリストヘッダ  
+・free()で解放されるchunkの内、サイズがmax_fast以下のものはこのリストに登録される。  
+  
+登録先のインデックスを求める式:  
+``` #define fastbin_index(sz) ((((unsigned int)(sz)) >> 3) – 2) ```  
+  
+・szは解放するchunkのサイズで、8バイト単位で拡張されるため、3ビットシフトする。  
+・0ビット目がオンの場合は存在しない事を示し、chunk登録時にこれをオフとする。  
+・chunk内の管理部は解放前の状態が保たれていて、これによりchunk確保時のchunk管理部設定の手間を省いている  
+
+
 
 
 
