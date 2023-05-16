@@ -4,8 +4,13 @@
 Xornet氏のpwnまとめ  
 https://hackmd.io/@Xornet/BkemeSAhU  
   
-Learning ARM Exploit Development
+Learning ARM Exploit Development  
 http://www.alicemacs.com/ARM_Exploit/    
+  
+StackPivotやROPについての日本語記事を書いている  
+https://sh0ebill.hatenablog.com/entry/2022/10/06/225144  
+  
+  
   
 pwn入門編  
 https://hackmd.io/@xk4KNXQvTxu07bQ0WJ7FUQ/rJTiw9Ww4?type=view  
