@@ -36,6 +36,11 @@
 https://tech.kusuwada.com/entry/2019/10/12/023145#section1  
   
   
+### 実行ファイルからバイナリコードを抽出する  
+``` objdump -M intel -d a.out | grep '^ ' | cut -f2 | perl -pe 's/(\w{2})\s+/\\x\1/g' ```  
+  
+  
+  
 ### シェルコードをインジェクションする  
 シェルコード  
 +  
