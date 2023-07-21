@@ -1,6 +1,28 @@
 # pwn,reversing,binary  
   
-  
+## SROP
+### sigreturnシステムコール
+プログラム動作中にシグナルが発生すると、カーネルはプロセスを一時停止してシグナルハンドラを呼び出す  
+その際、カーネルはシグナルを受け取ったときの状態をスタックに保存しておく。  
+シグナルハンドラの処理が終わるとsigreturn()が呼び出される。  
+sigreturn()はスタックから値をpopして元のプロセスのコンテキスト（プロセッサフラグ、レジスタ等）を復元する  
+（そのおかげで、シグナルにより割り込まれた場所から元のプロセスを再開できる）。  
+
+
+### 必要なガジェット  
+``` mov rax, 0x0f; syscall; ret ```  
+
+### SigreturnFrame()の返り値に対してexecve('/bin/sh')を実行するためのレジスタの設定  
+```pwntools
+sigret_frame = SigreturnFrame()
+sigret_frame.rax = constants.SYS_execve
+sigret_frame.rdi = addr_binsh
+sigret_frame.rsi = 0
+sigret_frame.rdx = 0
+sigret_frame.rip = syscall_ret
+
+```
+
   
 ## bufferoverflow  
 ### リターンアドレスを書き換える
