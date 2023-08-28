@@ -13,9 +13,12 @@ sigreturn()はスタックから値をpopして元のプロセスのコンテキ
 
 
 ### 必要なガジェット  
+
 ``` mov rax, 0x0f; syscall; ret ```  
 
+
 ### SigreturnFrame()の返り値に対してexecve('/bin/sh')を実行するためのレジスタの設定  
+
 ```pwntools
 sigret_frame = SigreturnFrame()
 sigret_frame.rax = constants.SYS_execve
@@ -26,6 +29,15 @@ sigret_frame.rip = syscall_ret
 
 ```
 
+### 書式指定子攻撃
+
+``` %n$p ```を使用することで、  
+わざわざ ``` %p %p %p ... ```と入力する必要なく、  
+何番目と指定することができる
+``` 
+//6番目がほしいとき
+%6$p
+```
   
 ## bufferoverflow  
 ### リターンアドレスを書き換える
