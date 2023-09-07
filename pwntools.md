@@ -3,6 +3,18 @@
 ### ライブラリのインポート  
 ``` from pwn import * ```  
 
+### おまじない
+```
+from pwn import *
+
+warnings.simplefilter('ignore',category=BytesWarning)
+bin_file = './vuln'
+binf = ELF(bin_file,checksec = False)
+context.binary = binf
+context.log_level = 'debug'
+```
+
+
 ### リトルエンディアンに変換する - p32()
 ```
 from pwn import *
