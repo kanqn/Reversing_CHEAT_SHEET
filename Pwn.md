@@ -56,6 +56,14 @@ rop = ROP(binf)
     rop.raw(rop.syscall.address)
 ```
 
+## __stack_chk_failを利用したGOT Overwrite
+Canaryがある場合にできるgot overwriteで、
+Canary破壊を検知すると__stack_chk_failが発火するのを利用して  
+CanaryにROPを組んで__stack_chk_failをわざと実行させることでROPを実行させる  
+ただし、そのためにはlibc addrリークや実態アドレスを表示できる関数(すでに呼び出されている関数)が必要  
+
+
+
 ## pwntoolsでFSBペイロードの作成
 
 exit()のGOTをmain()のアドレスに書き換えてret2mainをする例  
