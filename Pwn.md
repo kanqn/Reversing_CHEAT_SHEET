@@ -57,6 +57,7 @@ rop = ROP(binf)
 ```
 
 ## __stack_chk_failを利用したGOT Overwrite
+
 Canaryがある場合にできるgot overwriteで、
 Canary破壊を検知すると__stack_chk_failが発火するのを利用して  
 CanaryにROPを組んで__stack_chk_failをわざと実行させることでROPを実行させる  
