@@ -56,7 +56,7 @@ rop = ROP(binf)
     rop.raw(rop.syscall.address)
 ```
 
-## FSBペイロードの作成
+## pwntoolsでFSBペイロードの作成
 
 exit()のGOTをmain()のアドレスに書き換えてret2mainをする例  
 
