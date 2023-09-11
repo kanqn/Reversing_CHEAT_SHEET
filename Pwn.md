@@ -56,6 +56,17 @@ rop = ROP(binf)
     rop.raw(rop.syscall.address)
 ```
 
+## FSBペイロードの作成
+
+exit()のGOTをmain()のアドレスに書き換えてret2mainをする例  
+
+```
+fmtstr_payload(offset = 6, writes = {addr_got_exit: addr_main})
+```
+
+offset = 6というのは、aaaaaaaa %p %p %p %p %p %p %p %pという入力を与えた時、 
+0x6161616161616161が6番目に現れたから。  
+
 ## 書式指定子攻撃
 
 ``` %n$p ``` を使用することで、  
