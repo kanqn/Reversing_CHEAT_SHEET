@@ -1,5 +1,13 @@
 # pwn,reversing,binary  
-  
+
+
+## カナリアの特定
+### FSBでカナリアを特定する
+%p %p %p...としていったときに、**毎回値がランダムになってかつ末尾2ケタが00**がカナリア  
+あとは、うまくパディングしてcanaryに見つけた値をくっつければいい  
+https://ir0nstone.gitbook.io/notes/types/stack/canaries
+
+
 ## SROP
 ### sigreturnシステムコール
 プログラム動作中にシグナルが発生すると、カーネルはプロセスを一時停止してシグナルハンドラを呼び出す  
