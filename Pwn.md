@@ -17,7 +17,7 @@ context.binary = binf
 libc = binf.libc
 offset_libc_atoi = libc.symbols['atoi']
 
-#libc.address = 漏洩させたgotアドレスの中身 - libcのatoiアドレス
+#libc.address = 漏洩させたgotアドレスの中身(今回はatoi) - libcのatoiアドレス
 libc.address = addr_libc_atoi - offset_libc_atoi
 
 ```
