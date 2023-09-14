@@ -2,7 +2,9 @@
 
 
 ## カナリアの特定
+
 ### FSBでカナリアを特定する
+
 %p %p %p...としていったときに、**毎回値がランダムになってかつ末尾2ケタが00**がカナリア  
 あとは、うまくパディングしてcanaryに見つけた値をくっつければいい  
 https://ir0nstone.gitbook.io/notes/types/stack/canaries
