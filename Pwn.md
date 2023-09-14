@@ -1,7 +1,29 @@
 # pwn,reversing,binary  
 
+## libcアドレス特定
 
-## カナリアの特定
+
+## カナリアの特定(pwntools)
+
+```
+#!/usr/bin/env python3
+import time
+import warnings
+from pwn import *
+
+warnings.simplefilter('ignore', category = BytesWarning)
+
+bin_file = './vuln'
+binf = ELF(bin_file, checksec = False)
+context.binary = binf
+
+libc = binf.libc
+offset_libc_atoi = libc.symbols['atoi']
+
+#libc.address = 漏洩させたgotアドレスの中身 - libcのatoiアドレス
+libc.address = addr_libc_atoi - offset_libc_atoi
+
+```
 
 ### FSBでカナリアを特定する
 
