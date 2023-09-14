@@ -2,9 +2,6 @@
 
 ## libcアドレス特定
 
-
-## カナリアの特定(pwntools)
-
 ```
 #!/usr/bin/env python3
 import time
@@ -24,6 +21,9 @@ offset_libc_atoi = libc.symbols['atoi']
 libc.address = addr_libc_atoi - offset_libc_atoi
 
 ```
+
+
+## カナリアの特定(pwntools)
 
 ### FSBでカナリアを特定する
 
