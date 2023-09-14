@@ -14,6 +14,10 @@ bin_file = './vuln'
 binf = ELF(bin_file,checksec = False)
 context.binary = binf
 context.log_level = 'debug'
+
+libc = binf.libc
+conn = process(bin_file)
+
 ```
 
 
