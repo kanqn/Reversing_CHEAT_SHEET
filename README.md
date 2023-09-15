@@ -1,3 +1,27 @@
+### RELRO無効化
+
+```
+gcc -Wl,-z,norelro -o target example.c
+```
+
+### SSP無効化
+
+```
+-fno-stack-protector
+```
+
+### NXbit無効化
+
+```
+-z execstack
+```
+
+### ASLR無効化
+
+```
+sudo sysctl kernel.randomize_va_space=0
+```
+
 # PWNやBinaryについてのメモ
 
 ### 読むべき記事
