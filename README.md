@@ -22,6 +22,12 @@ gcc -Wl,-z,norelro -o target example.c
 sudo sysctl kernel.randomize_va_space=0
 ```
 
+### PIE無効化
+
+```
+-no-pie
+```
+
 # PWNやBinaryについてのメモ
 
 ### 読むべき記事
