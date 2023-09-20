@@ -20,6 +20,23 @@ conn = process(bin_file)
 
 ```
 
+### オフセットを調べる
+
+```
+offset = cyclic(100)
+conn.sendlineafter('Enter details' , offset)
+conn.wait()
+
+#x86
+result_offset = cyclic_find(conn.corefile.pc)
+
+#x64
+result_offset = cyclic_find(conn.corefile.read(conn.corefile.sp, 4))
+
+print(result_offset)
+```
+
+
 
 ### リトルエンディアンに変換する - p32()
 ```
