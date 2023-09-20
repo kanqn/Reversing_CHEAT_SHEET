@@ -6,7 +6,10 @@
 
 ### おまじない
 
+
+
 ```
+
 from pwn import *
 
 warnings.simplefilter('ignore',category=BytesWarning)
