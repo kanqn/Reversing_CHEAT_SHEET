@@ -18,12 +18,12 @@ binf = ELF(bin_file,checksec = False)
 context.binary = binf
 context.log_level = 'debug'
 
-libc = binf.libc
 conn = process(bin_file)
 
 ```
 
-libcが配布された形の場合  
+libcが配布された形の場合は以下も追加をすることで  
+実行するバイナリとlibcを別々でしていしてプログラムを走らせることができる    
 
 ```
 lib = './libc.so.6'  # libc ライブラリを設定します
