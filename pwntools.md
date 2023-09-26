@@ -23,6 +23,13 @@ conn = process(bin_file)
 
 ```
 
+libcが配布された形の場合  
+
+```
+lib = './libc.so.6'  # libc ライブラリを設定します
+libc = context.binary = ELF(lib, checksec= False )
+```
+
 ### オフセットを調べる
 
 ```
