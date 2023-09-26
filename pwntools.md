@@ -46,6 +46,13 @@ result_offset = cyclic_find(conn.corefile.read(conn.corefile.sp, 4))
 print(result_offset)
 ```
 
+### 文字列を検索する
+
+以下の例はlibcライブラリからbin/shを検索する
+
+```
+shell = next(libc.search(b'/bin/sh\x00'))
+```
 
 
 ### リトルエンディアンに変換する - p32()
