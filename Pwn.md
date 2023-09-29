@@ -95,6 +95,22 @@ Canary破壊を検知すると__stack_chk_failが発火するのを利用して
 CanaryにROPを組んで__stack_chk_failをわざと実行させることでROPを実行させる  
 ただし、そのためにはlibc addrリークや実態アドレスを表示できる関数(すでに呼び出されている関数)が必要  
 
+## return_to_dl_resolve
+動的リンカである、_dl_runtime_resolve()を利用したエクスプロイト手法  
+なお、関数が初めて呼び出されるまでそのアドレスを解決しない方式  
+
+### 関数の呼び出し前と呼び出し後
+
+呼び出される前
+・.pltセクションは、関数のアドレスを.got.pltセクションから探す
+・もしGOTがアドレスをもってない(lazy_bindingのため)場合  
+→PLTは、_dl_runtime_resolve()を呼び出す
+・この関数によって、主要なELFイメージである.dynstrセクションで'puts\0'という  
+NULL終端文字列を見つけて、すべてのロードされた共有オブジェクトでputs()のアドレスを見つける
+
+呼び出された後
+・_dl_runtime_resolve()は、.rela.plt .dynsym そして、  
+.dynstrのセクションのアドレスを見つけるために、.dynamicセクションを使用する
 
 
 ## pwntoolsでFSBペイロードの作成
