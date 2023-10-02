@@ -303,7 +303,17 @@ s.interactive()
 </details> 
   
 
+### プログラムが/opt/glibc直下のlibcやld-linuxを参照している場合
+  
+以下のようなエラーが出る場合がそれにあたる  
+./quotes_list: error while loading shared libraries: libc.so.6: cannot open shared object file: No such file or directory  
 
+patchelfで修正してあげる  
+
+```
+patchelf --set-interpreter ld-linux-x86-64.sp.2 quotes_list
+patchelf --set-rpath `pwd` quotes_list
+```
 
 
 
