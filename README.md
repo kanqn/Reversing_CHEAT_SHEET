@@ -57,3 +57,7 @@ https://qiita.com/4hiziri/items/298539ed8c945e8e6329
   
 pwn100本ノック  
 https://zenn.dev/musacode/scraps/7fc68fd44283b8  
+
+### 解けなかったけど解きたいpwn問題
+Ricerca2023 ctf nemu
+https://hjmsan.hatenablog.com/entry/2023/04/23/122516
