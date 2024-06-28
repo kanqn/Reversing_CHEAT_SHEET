@@ -31,6 +31,12 @@ libc.address = addr_libc_atoi - offset_libc_atoi
 あとは、うまくパディングしてcanaryに見つけた値をくっつければいい  
 https://ir0nstone.gitbook.io/notes/types/stack/canaries
 
+なお、Canaryのレイアウトは以下
+```
+低アドレス
+[ローカル変数] [canary] [保存されたベースポインタ] [戻りアドレス]
+高アドレス
+```
 
 ## SROP
 ### sigreturnシステムコール
