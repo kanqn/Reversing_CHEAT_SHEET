@@ -29,4 +29,16 @@ sudo docker ps
 
 ```
 sudo docker exec -it jovial_lewin bash
+もしくは
+sudo docker run -it nocontrol /bin/bash
+```
+
+#### Dockerfileに追加するべきコマンド
+
+```
+RUN apt-get update && apt-get install -y gdb gdbserver git python3-pip vim
+
+RUN git clone https://github.com/pwndbg/pwndbg
+RUN cd pwndbg && ./setup.sh
+RUN echo "source /opt/pwndbg/gdbinit.py" >> /root/.gdbinit
 ```
