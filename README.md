@@ -37,6 +37,10 @@ sudo sysctl kernel.randomize_va_space=0
 # PWNやBinaryについてのメモ
 
 ### 読むべき記事
+
+glibcでRIP取得に使えるシンボルまとめ  
+https://kam1tsur3.org/2022/06/22/get-rip-in-libc/  
+  
 Xornet氏のpwnまとめ  
 https://hackmd.io/@Xornet/BkemeSAhU  
   
