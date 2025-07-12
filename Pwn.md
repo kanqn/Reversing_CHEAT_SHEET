@@ -29,8 +29,10 @@ libc.address = addr_libc_atoi - offset_libc_atoi
 
 %p %p %p...としていったときに、**毎回値がランダムになってかつ末尾2ケタが00**がカナリア  
 あとは、うまくパディングしてcanaryに見つけた値をくっつければいい  
-https://ir0nstone.gitbook.io/notes/types/stack/canaries
+https://ir0nstone.gitbook.io/notes/types/stack/canaries  
 
+Format String AttackによるGOT overwrite  
+https://sok1.hatenablog.com/entry/2022/01/17/050556  
 なお、Canaryのレイアウトは以下
 ```
 低アドレス
