@@ -40,6 +40,13 @@ sudo sysctl kernel.randomize_va_space=0
 
 glibcでRIP取得に使えるシンボルまとめ  
 https://kam1tsur3.org/2022/06/22/get-rip-in-libc/  
+
+https://megalodon.jp/2025-0929-0233-52/https://kam1tsur3.org:443/2022/06/22/get-rip-in-libc/  
+  
+glibc heap問で個人的によく使うテクニックについて  
+https://hama.hatenadiary.jp:443/entry/2018/12/08/142437  
+  
+https://megalodon.jp/2025-0929-0232-39/https://hama.hatenadiary.jp:443/entry/2018/12/08/142437
   
 Xornet氏のpwnまとめ  
 https://hackmd.io/@Xornet/BkemeSAhU  
