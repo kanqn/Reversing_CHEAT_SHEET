@@ -74,6 +74,7 @@ https://qiita.com/4hiziri/items/298539ed8c945e8e6329
 
 FSOPする際のfopen関数の詳細な分析記事  
 https://note.com/dsource/n/n85e4d145fd63  
+https://megalodon.jp/2025-1207-2031-00/https://note.com:443/dsource/n/n85e4d145fd63  
   
   
 ### Writeup置き場
