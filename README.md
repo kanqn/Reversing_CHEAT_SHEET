@@ -34,6 +34,11 @@ sudo sysctl kernel.randomize_va_space=0
 -no-pie
 ```
 
+### Tools
+  
+Pwndbg + GEF + Peda - One for all  
+https://github.com/apogiatzis/gdb-peda-pwndbg-gef  
+  
 # PWNやBinaryについてのメモ
 
 ### 読むべき記事
