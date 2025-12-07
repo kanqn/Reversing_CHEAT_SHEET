@@ -72,8 +72,10 @@ https://hackmd.io/@xk4KNXQvTxu07bQ0WJ7FUQ/rJTiw9Ww4?type=view
 x64でpwnする際の注意点  
 https://qiita.com/4hiziri/items/298539ed8c945e8e6329  
 
-
-
+FSOPする際のfopen関数の詳細な分析記事  
+https://note.com/dsource/n/n85e4d145fd63  
+  
+  
 ### Writeup置き場
 
   
