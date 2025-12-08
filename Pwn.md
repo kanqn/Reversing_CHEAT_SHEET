@@ -323,7 +323,21 @@ patchelf --set-interpreter ld-linux-x86-64.sp.2 quotes_list
 patchelf --set-rpath `pwd` quotes_list
 ```
 
+### FSOP
 
+#### structFILE
+  
+struct FILEは、stdinやstdout、その他ユーザーが開いたファイルの入出力処理やバッファストリーミング等を行うための構造体  
+→FILEは対応する関数を関数ポインタから呼び出すことでファイルの種類に応じて適切に振る舞いを変えながら入出力を行います。  
+pwn的な考えでは、以下の方法が考えられる  
+  
+・関数ポインタを書き換える  
+→関数テーブル _IO_file_jumpsが配置されているところは、r権限しかないため無理  
+  
+・自前のフェイクvtableを用意したあと、_IO_FILE_plus.vtableを偽のvtableを指すように書き換えてしまう  
+→指定されたvtableが有効な領域内を指しているかどうかをチェックし、そうでない場合にはプロセスを終了させるためこれもダメ  
+
+そのため、FSOPでは、IO_file_jumpsテーブルではなく、チェックが甘い_IO_wfile_jumpsテーブルを利用する  
 
 
 ### C言語の関数内の脆弱性
