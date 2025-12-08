@@ -339,6 +339,27 @@ pwn的な考えでは、以下の方法が考えられる
 
 そのため、FSOPでは、IO_file_jumpsテーブルではなく、チェックが甘い_IO_wfile_jumpsテーブルを利用する  
 
+#### そもそもIO_file_jumpsテーブルとは
+
+この話に行く前にstructFILEはstdinやstdoutはstruct FILEをラップするstruct _IO_FILE_plusという構造体です  
+この中に、struct _IO_jump_t型のポインタを持っていることが分かります  
+  
+```
+struct _IO_FILE_plus
+{
+  _IO_FILE file;
+  const struct _IO_jump_t *vtable;
+};
+```
+
+このようにIO_file_jumpsテーブルとは  
+_IO_jump_t構造体で宣言されたテーブルであり、_IO_jump_tはファイルの入出力に利用する関数ポインタのリストである。  
+https://elixir.bootlin.com/glibc/glibc-2.35/source/libio/libioP.h#L471  
+
+以下は_IO_jump_tの構造体
+https://elixir.bootlin.com/glibc/glibc-2.35/source/libio/libioP.h#L293
+
+  
 
 ### C言語の関数内の脆弱性
 
