@@ -351,14 +351,14 @@ struct _IO_FILE_plus
   const struct _IO_jump_t *vtable;
 };
 ```
-
+  
 このようにIO_file_jumpsテーブルとは  
 _IO_jump_t構造体で宣言されたテーブルであり、_IO_jump_tはファイルの入出力に利用する関数ポインタのリストである。  
 https://elixir.bootlin.com/glibc/glibc-2.35/source/libio/libioP.h#L471  
 
-以下は_IO_jump_tの構造体
-https://elixir.bootlin.com/glibc/glibc-2.35/source/libio/libioP.h#L293
-
+以下は_IO_jump_tの構造体  
+https://elixir.bootlin.com/glibc/glibc-2.35/source/libio/libioP.h#L293  
+  
 #### struct _IO_FILE_plusの動き
   
 putsで文字列を表示する際には  
