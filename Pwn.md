@@ -343,6 +343,22 @@ _IO_wdoallocbuf()は_IO_WDOALLOCATEマクロを実行してジャンプテーブ
 _IO_file_jumpsの場合と違ってvtableの存在する範囲チェックが存在しない  
 **→FILE._wide_data._wide_vtableテーブルが指し示す先は自由に書き換えることができる**  
 
+まとめると、FSOPの手順は以下  
+```
+1.FILE._wide_data._wide_vtableを任意に書き込めるアドレスを指すように書き換える
+2.書き換えた先に偽のvtableを用意し、doallocateに当たる部分を実行したい命令のアドレスに書き換える
+3.FILE._vtableを_IO_file_jumpsから_IO_wfile_jumpsに書き換える (この書き換え自体は、_IO_wfile_jumpsが有効なアドレスにあるためOK)
+4.FILE._vtable.__overflow(==_IO_wfile_overflow)を呼び出す
+5.その内部で、上に見たようにdoallocate(任意の命令アドレス)にRIPが移る
+
+4.の__overflowの呼び出しでは、exit時に内部で、_IO_flush_all_lockp() を呼び出すため、
+__overflowの呼び出し時には単純にexitするパスを通ればよい
+
+なぜ、_IO_flush_all_lockp() を呼び出す必要があるかというと目的である_IO_wdoallocbuf()を呼び出すため
+_IO_flush_all_lockp() → _IO_OVERFLOW() → _IO_wfile_overflow() →
+_IO_wdoallocbuf() → _IO_WDOALLOCATE()
+```
+
 #### そもそもIO_file_jumpsテーブルとは
 
 この話に行く前にstructFILEはstdinやstdoutはstruct FILEをラップするstruct _IO_FILE_plusという構造体です  
