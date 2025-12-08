@@ -325,6 +325,40 @@ patchelf --set-rpath `pwd` quotes_list
 
 ### FSOP
 
+#### IO_file_jumpsテーブルとは
+
+本題に行く前にstructFILEはstdinやstdoutはstruct FILEをラップするstruct _IO_FILE_plusという構造体です  
+この中に、struct _IO_jump_t型のポインタを持っていることが分かります  
+  
+```
+struct _IO_FILE_plus
+{
+  _IO_FILE file;
+  const struct _IO_jump_t *vtable;
+};
+```
+  
+このようにIO_file_jumpsテーブルとは  
+_IO_jump_t構造体で宣言されたテーブルであり、_IO_jump_tはファイルの入出力に利用する関数ポインタのリストである。  
+https://elixir.bootlin.com/glibc/glibc-2.35/source/libio/libioP.h#L471  
+
+以下は_IO_jump_tの構造体  
+https://elixir.bootlin.com/glibc/glibc-2.35/source/libio/libioP.h#L293  
+  
+#### struct _IO_FILE_plusの動き
+  
+putsで文字列を表示する際には  
+struct _IO_FILE_plusのvtableの中から該当するメンバ__xsputnを呼び出しています。  
+
+```
+gef> p _IO_2_1_stdout_->vtable->__xsputn
+$18 = (_IO_xsputn_t) 0x7f6ab248b680 <_IO_new_file_xsputn>
+```
+  
+最終的には_IO_new_file_xsputn()(/libio/fileops.c)が呼び出されています。  
+**このようにして、FILEは対応する関数を関数ポインタから呼び出すことで  
+ファイルの種類に応じて適切に振る舞いを変えながら入出力を行います**  
+
 #### structFILE
   
 struct FILEは、stdinやstdout、その他ユーザーが開いたファイルの入出力処理やバッファストリーミング等を行うための構造体  
@@ -358,42 +392,9 @@ __overflowの呼び出し時には単純にexitするパスを通ればよい
 _IO_flush_all_lockp() → _IO_OVERFLOW() → _IO_wfile_overflow() →
 _IO_wdoallocbuf() → _IO_WDOALLOCATE()
 ```
-
-#### そもそもIO_file_jumpsテーブルとは
-
-この話に行く前にstructFILEはstdinやstdoutはstruct FILEをラップするstruct _IO_FILE_plusという構造体です  
-この中に、struct _IO_jump_t型のポインタを持っていることが分かります  
   
-```
-struct _IO_FILE_plus
-{
-  _IO_FILE file;
-  const struct _IO_jump_t *vtable;
-};
-```
   
-このようにIO_file_jumpsテーブルとは  
-_IO_jump_t構造体で宣言されたテーブルであり、_IO_jump_tはファイルの入出力に利用する関数ポインタのリストである。  
-https://elixir.bootlin.com/glibc/glibc-2.35/source/libio/libioP.h#L471  
-
-以下は_IO_jump_tの構造体  
-https://elixir.bootlin.com/glibc/glibc-2.35/source/libio/libioP.h#L293  
   
-#### struct _IO_FILE_plusの動き
-  
-putsで文字列を表示する際には  
-struct _IO_FILE_plusのvtableの中から該当するメンバ__xsputnを呼び出しています。  
-
-```
-gef> p _IO_2_1_stdout_->vtable->__xsputn
-$18 = (_IO_xsputn_t) 0x7f6ab248b680 <_IO_new_file_xsputn>
-```
-  
-最終的には_IO_new_file_xsputn()(/libio/fileops.c)が呼び出されています。  
-**このようにして、FILEは対応する関数を関数ポインタから呼び出すことで  
-ファイルの種類に応じて適切に振る舞いを変えながら入出力を行います**  
-
-
 ### C言語の関数内の脆弱性
 
 #### rand()を呼び出した際に引数に何も渡さない場合の脆弱性
