@@ -359,7 +359,20 @@ https://elixir.bootlin.com/glibc/glibc-2.35/source/libio/libioP.h#L471
 以下は_IO_jump_tの構造体
 https://elixir.bootlin.com/glibc/glibc-2.35/source/libio/libioP.h#L293
 
+#### struct _IO_FILE_plusの動き
   
+putsで文字列を表示する際には  
+struct _IO_FILE_plusのvtableの中から該当するメンバ__xsputnを呼び出しています。  
+
+```
+gef> p _IO_2_1_stdout_->vtable->__xsputn
+$18 = (_IO_xsputn_t) 0x7f6ab248b680 <_IO_new_file_xsputn>
+```
+  
+最終的には_IO_new_file_xsputn()(/libio/fileops.c)が呼び出されています。  
+**このようにして、FILEは対応する関数を関数ポインタから呼び出すことで  
+ファイルの種類に応じて適切に振る舞いを変えながら入出力を行います**  
+
 
 ### C言語の関数内の脆弱性
 
