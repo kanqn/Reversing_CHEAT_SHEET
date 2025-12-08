@@ -388,7 +388,8 @@ _IO_file_jumpsの場合と違ってvtableの存在する範囲チェックが存
 4.の__overflowの呼び出しでは、exit時に内部で、_IO_flush_all_lockp() を呼び出すため、
 __overflowの呼び出し時には単純にexitするパスを通ればよい
 
-なぜ、_IO_flush_all_lockp() を呼び出す必要があるかというと目的である_IO_wdoallocbuf()を呼び出すため
+なぜ、_IO_flush_all_lockp() を呼び出す必要があるかというと目的である_IO_wdoallocbuf()を呼び出して、
+最終的に _wide_vtable->__doallocate を呼び出す必要があるため
 _IO_flush_all_lockp() → _IO_OVERFLOW() → _IO_wfile_overflow() →
 _IO_wdoallocbuf() → _IO_WDOALLOCATE()
 ```
