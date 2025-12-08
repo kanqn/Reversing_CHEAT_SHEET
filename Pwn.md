@@ -338,6 +338,10 @@ pwn的な考えでは、以下の方法が考えられる
 →指定されたvtableが有効な領域内を指しているかどうかをチェックし、そうでない場合にはプロセスを終了させるためこれもダメ  
 
 そのため、FSOPでは、IO_file_jumpsテーブルではなく、チェックが甘い_IO_wfile_jumpsテーブルを利用する  
+注目すべきはこの中のoverflowフィールドに入ってる _IO_wfile_overflow() でこれは内部で_IO_wdoallocbuf()を呼び出す  
+_IO_wdoallocbuf()は_IO_WDOALLOCATEマクロを実行してジャンプテーブルにアクセスするため、  
+_IO_file_jumpsの場合と違ってvtableの存在する範囲チェックが存在しない  
+**→FILE._wide_data._wide_vtableテーブルが指し示す先は自由に書き換えることができる**  
 
 #### そもそもIO_file_jumpsテーブルとは
 
