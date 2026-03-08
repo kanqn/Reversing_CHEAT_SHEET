@@ -34,6 +34,18 @@ sudo sysctl kernel.randomize_va_space=0
 -no-pie
 ```
 
+### VirtualBoxでコピペができない場合
+
+```
+デバイス＞クリップボードの共有が双方向になっていることを確認
+それでもダメなら、Ubuntu上で
+apt-get remove libcheese-gtk23
+apt-get install xserver-xorg-core
+apt-get install -f virtualbox-guest-x11
+VBoxClient --clipboard
+```
+
+
 ### Tools
   
 Pwndbg + GEF + Peda - One for all  
