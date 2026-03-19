@@ -25,3 +25,23 @@ https://ja.wikibooks.org/wiki/X86%E3%82%A2%E3%82%BB%E3%83%B3%E3%83%96%E3%83%A9/x
 ``` set $レジスタの変数=0xフラグレジスタの値 ```
 
 #### フレームの情報を表示 - info frame
+
+### どこでexploitが異常を起こしているかを追う
+
+```
+exploit.pyのエラーを吐いてしまう行の周辺に以下を追加して実行
+input("[*] Attach gdb now: gdb -p $(pgrep victim)  then press Enter")
+
+[*] Attach gdb now: gdb -p $(pgrep victim)  then press Enterと表示されたら
+別のターミナルを起動して以下
+$ gdb -p $(pgrep victim)
+catch signal SIGSEGV
+
+ここまできたらexploit.pyでEnter
+
+bt
+info register
+```
+
+
+
