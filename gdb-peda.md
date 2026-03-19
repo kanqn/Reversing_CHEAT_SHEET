@@ -26,7 +26,7 @@ https://ja.wikibooks.org/wiki/X86%E3%82%A2%E3%82%BB%E3%83%B3%E3%83%96%E3%83%A9/x
 
 #### フレームの情報を表示 - info frame
 
-#### info proc mappings : 現在のプロセスのメモリマッピングを見ることができます
+#### 現在のプロセスのメモリマッピングを見る - info proc mappings
 
 ### どこでexploitが異常を起こしているかを追う
 
