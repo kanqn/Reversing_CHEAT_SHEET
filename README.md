@@ -4,6 +4,12 @@
 ./rp-lin -f /home/kali/pwn/wanictf2023-writeup/pwn/ret2libc/src/libc.so.6 --rop=2 --unique | grep 'pop rcx'
 ```
 
+### glibcバージョン確認
+
+```
+ldd --version
+```
+
 ### RELRO無効化
 
 ```
